@@ -1,0 +1,71 @@
+#include <iostream>
+#include <cstring>
+#include <locale>
+
+using namespace std;
+
+void code()
+{
+	char word[20] = {};
+	int i, key;
+	cout << "Введите шифруемое слово на английском языке:" << endl;
+	cin >> word;
+	cout << "Введите ключ:" << endl;
+	cin >> key;
+	for (i = 0; i<strlen(word); i++)
+	{
+		if (((word[i]>'Z') && (word[i] + key >= 'a') && (word[i] + key <= 'z')) || (((word[i] + key >= 'A') && (word[i] + key <= 'Z'))))
+			word[i] = word[i] + key;
+		else if (word[i] + key > 'z') 
+			word[i] = 'a' + key-('z'-word[i]+1);
+		else
+			word[i] = 'A' + key - ('Z' - word[i] + 1);
+	}
+	cout << "Зашифрованное слово:" << endl << word << endl << endl;
+}
+
+void decode()
+{
+	char word[20] = {};
+	int i, key;
+	cout << "Введите зашифрованное слово на английском языке:" << endl;
+	cin >> word;
+	cout << "Введите ключ:" << endl;
+	cin >> key;
+	for (i = 0; i<strlen(word); i++)
+	{
+		if (( (word[i] - key >= 'a') && (word[i] - key <= 'z')) || (((word[i] < 'a') && (word[i] - key >= 'A') && (word[i] - key <= 'Z'))))
+		{
+			word[i] = word[i] - key;
+		}
+		else if (word[i] - key < 'A')
+			word[i] = 'Z' - key + (word[i]-'A'+1);
+		else
+			word[i] = 'z' - key + (word[i]-'a'+1);
+		
+	}
+	cout << "Расшифрованное слово:" << endl << word << endl << endl;
+}
+
+
+int main()
+{
+	setlocale(LC_CTYPE, "rus");
+	int a=1;
+	while (a)
+	{
+		cout << "1-Зашифровать слово" << endl << "2-Расшифровать слово" << endl << "3-Выход" << endl;
+		cin >> a;
+		switch (a)
+		{
+		case 1:
+			code();
+			break;
+		case 2:
+			decode();
+			break;
+		case 3:
+			return 0;
+		}
+	}
+}
